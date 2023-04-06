@@ -108,7 +108,7 @@ class Api {
 const apiConnect = new Api({
     baseUrl: "https://mesto.nomoreparties.co/v1/cohort-56",
     headers: {
-        authorization: "3cf2861b-0109-4432-b8bc-65d940a41203",
+        authorization: "9c9b38b2-7369-4326-aac4-9ce480f1f0cd",
         "Content-Type": "application/json",
     },
 });
