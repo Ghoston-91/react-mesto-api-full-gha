@@ -4,12 +4,12 @@
   
 Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
 
-Адрес репозитория: https://github.com/...
+Адрес репозитория: https://github.com/Ghoston-91/react-mesto-api-full-gha
 
 ## Ссылки на проект
 
 IP-адрес 84.201.167.187
 
-Frontend https://...
+Frontend https://ghoston91.nomoredomains.monster
 
-Backend https://...
+Backend https://api.ghoston91.nomoredomains.monster
