@@ -1,4 +1,4 @@
-const allowedCors = ['https://mesto-travel.nomoredomains.work', 'http://mesto-travel.nomoredomains.work', 'localhost:3000'];
+const allowedCors = ['https://ghoston91.nomoredomains.monster', 'http://ghoston91.nomoredomains.monster/', 'localhost:3000'];
 
 function checkAccess(req, res, next) {
   const { origin } = req.headers;
