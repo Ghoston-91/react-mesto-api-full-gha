@@ -13,7 +13,7 @@ import { AddPlacePopup } from "./AddPlacePopup ";
 import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
-import {checkAuthData, signIn, signUp} from "../utils/authorization";
+import * as auth from "../utils/authorization";
 import InfoTooltip from "./InfoTooltip";
 
 function App() {
@@ -31,29 +31,50 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userEmail, setUserEmail] = useState('');
     const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
-    const [status, setStatus] = useState('');
+    
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [infoTooltipText, setIsInfoTooltipText] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const jwt = localStorage.getItem('token');
+        if (jwt) {
+            auth.checkAuthData(jwt)
+            .then((res) => {
+                if (res) {
+                    setUserEmail(res.email);
+                    setIsLoggedIn(true);
+                    navigate('/', {replace: true});
+                }
+            })
+            .catch((err) => {console.log(err)})
+        }
+    }, []);
 
     useEffect(() => {
-        apiConnect
-            .getUserInfoProfile()
-            .then((res) => {
-                setCurrentUser(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        async function setUser() {
+            await apiConnect.getUserInfoProfile()
+              .then((user) => {
+                setCurrentUser(user);
+              })
+              .catch((err) => {console.log(err)})
+          }
+        async function setData() {
+            await apiConnect.getInitialCards()
+              .then((userCards) => {
+                  setCards(userCards);
+              })
+              .catch((err) => {
+                  console.log(err)
+              })
+        }
 
-        apiConnect
-            .getInitialCards()
-            .then((res) => {
-                setCards(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
+        if (isLoggedIn) {
+            setUser();
+            setData();
+        }
+
+    }, [isLoggedIn]);
 
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(true);
@@ -148,53 +169,46 @@ function App() {
             });
     }
 
-    const handleRegister = async (data) => {
-        try {
-            await signUp(data);
-            setInfoTooltipOpen(true);
-            setStatus('accept');
-            navigate("/sign-in")
-        } catch(err) {
-            console.log(err)
-            setInfoTooltipOpen(true);
-            setStatus('failed');
-        }
+    function openInfoTooltip(isSuccessfull) {
+        isSuccessfull 
+        ? setIsInfoTooltipText('Вы успешно зарегистрировались!') 
+        : setIsInfoTooltipText('Что-то пошло не так! Попробуйте ещё раз.');
+        setIsSuccess(isSuccessfull);
+        setInfoTooltipOpen(true);
     }
 
-    const handleSignIn = async (data) => {
-        try {
-            const {token} = await signIn(data);
-            localStorage.setItem('jwt', token);
-            setIsLoggedIn(true);
-            setUserEmail(data.email);
-            navigate("/")
-        } catch(err) {
-            console.log(err);
-            setInfoTooltipOpen(true);
-            setStatus('failed');
-        }
+    function handleRegister(formValue) {
+        auth.signUp(formValue)
+            .then(() => {
+                infoTooltipOpen(true);
+            })
+            .then(() => {
+                navigate('/sign-in');
+            })
+            .catch(() => {
+                infoTooltipOpen(false);
+            })
+    }
+
+    function handleSignIn(formValue) {
+        auth.signIn(formValue)
+            .then(() => {
+                setUserEmail(formValue.email);
+                setIsLoggedIn(true);
+            })
+            .then(() => {
+                navigate('/', {replace:true})
+            })
+            .catch(() => {
+                infoTooltipOpen(false);
+            })
     }
 
     function handleSignExit(){
-        localStorage.removeItem('jwt');
+        localStorage.clear('token');
         setIsLoggedIn(false);
-        setUserEmail('');
-        navigate('/sign-in')
-    } 
-
-    useEffect(() =>{
-        const jwt = localStorage.getItem('jwt');
-
-        if(jwt) {
-            checkAuthData(jwt)
-            .then((res) => {
-                setIsLoggedIn(true);
-                setUserEmail(res.data.email);
-                navigate('/')
-            })
-            .catch((err) => console.log(err))
-        }
-    }, [navigate])
+        setUserEmail('email@email');
+    }
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -247,10 +261,10 @@ function App() {
                     onUpdateAvatar={handleUpdateAvatar}
                 /> 
                 <InfoTooltip
-                name="status"
+                isSuccess={isSuccess}
+                text={infoTooltipText}
                 isOpen={infoTooltipOpen}
                 onClose={closeAllPopups}
-                status={status}
                 />
         </div>
         </CurrentUserContext.Provider>
