@@ -7,5 +7,5 @@ module.exports = (err, req, res, next) => {
         ? 'Внутренняя ошибка на сервере'
         : message,
     });
-    next();
-  };
+  next();
+};

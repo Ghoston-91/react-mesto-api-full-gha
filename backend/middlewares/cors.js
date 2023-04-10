@@ -1,7 +1,7 @@
 const allowedCors = [
-  'https://ghoston91.nomoredomains.monster',
-  'http://ghoston91.nomoredomains.monster/',
-  'localhost:3000'
+  // 'https://ghoston91.nomoredomains.monster',
+  // 'http://ghoston91.nomoredomains.monster/',
+  'localhost:3000',
 ];
 
 function checkAccess(req, res, next) {

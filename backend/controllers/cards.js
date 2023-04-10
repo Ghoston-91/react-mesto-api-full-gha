@@ -35,6 +35,7 @@ module.exports.deleteCard = (req, res, next) => {
     .orFail(() => {
       throw new ErrorNotFound('Пользователь не найден');
     })
+    // eslint-disable-next-line consistent-return
     .then((card) => {
       const ownerId = card.owner.id;
       if (ownerId !== userId) {
