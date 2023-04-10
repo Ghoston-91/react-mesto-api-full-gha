@@ -13,6 +13,6 @@ const cardSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-})
+});
 
 module.exports = model("card", cardSchema)

@@ -1,4 +1,4 @@
-const createError = require("http-errors")
+const createError = require("http-errors");
 const User = require("../models/user")
 const {
   http200,

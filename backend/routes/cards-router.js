@@ -24,7 +24,7 @@ router.post(
   }),
   createCard,
 )
-router.get("/", getCards)
+router.get("/", getCards);
 router.delete(
   "/:cardId",
   celebrate({

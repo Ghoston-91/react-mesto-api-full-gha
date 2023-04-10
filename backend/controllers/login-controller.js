@@ -1,5 +1,5 @@
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 const User = require("../models/user");
 const { SECRET } = require("../middlewares/auth");

@@ -1,4 +1,4 @@
-const createError = require("http-errors")
+const createError = require("http-errors");
 const Card = require("../models/card")
 const {
   http200,

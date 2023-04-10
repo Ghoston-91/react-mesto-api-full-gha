@@ -1,4 +1,4 @@
-const expressWinston = require("express-winston")
+const expressWinston = require("express-winston");
 const winston = require("winston")
 
 const requestLogger = expressWinston.logger({

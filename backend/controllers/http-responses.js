@@ -1,5 +1,5 @@
 const http500 = (res, message) => {
-  res.status(500).send({ message })
+  res.status(500).send({ message });
 }
 
 const http400 = (res, message) => {

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { validator } = require("../utils/utils")
+const { validator } = require("../utils/utils");
 
 const field = {
   type: String,
