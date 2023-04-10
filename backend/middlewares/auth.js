@@ -4,7 +4,7 @@ const createError = require("http-errors")
 const { NODE_ENV, JWT_SECRET: SECRET = NODE_ENV !== "production" ? "dev-secret" : null } = process.env
 
 if (NODE_ENV === "production") {
-  throw new Error("JWT_SECRET отсутсвует!")
+  throw new Error("JWT_SECRET отсутсвует")
 }
 const checkToken = (req, res, next) => {
   let success = false
