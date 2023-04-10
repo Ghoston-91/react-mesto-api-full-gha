@@ -37,5 +37,5 @@ app.use(errors());
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
-  console.log(`Listing on port ${PORT}`);
+  console.log(`Listing on port - ${PORT}`);
 });
