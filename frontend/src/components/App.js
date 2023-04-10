@@ -31,6 +31,7 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userEmail, setUserEmail] = useState('');
     const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
+    const [status, setStatus] = useState('');
     
     const [isSuccess, setIsSuccess] = useState(false);
     const [infoTooltipText, setIsInfoTooltipText] = useState('');
@@ -178,7 +179,7 @@ function App() {
     }
 
     function handleRegister(formValue) {
-        auth.signUp(formValue)
+        auth.register(formValue)
             .then(() => {
                 openInfoTooltip(true);
             })
@@ -190,8 +191,8 @@ function App() {
             })
     }
 
-    function handleSignIn(formValue) {
-        auth.signIn(formValue)
+    function handleSignIn (formValue) {
+        auth.login(formValue)
             .then(() => {
                 setUserEmail(formValue.email);
                 setIsLoggedIn(true);
@@ -204,7 +205,7 @@ function App() {
             })
     }
 
-    function handleSignExit(){
+    function handleSignExit() {
         localStorage.clear('token');
         setIsLoggedIn(false);
         setUserEmail('email@email');
@@ -264,7 +265,7 @@ function App() {
                 isSuccess={isSuccess}
                 text={infoTooltipText}
                 isOpen={infoTooltipOpen}
-                onClose={closeAllPopups}
+                onClose={() => {setInfoTooltipOpen(false)}}
                 />
         </div>
         </CurrentUserContext.Provider>
