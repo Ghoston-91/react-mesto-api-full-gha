@@ -1,6 +1,6 @@
 const routerUsers = require('express').Router();
 const { Joi, celebrate } = require('celebrate');
-const patternValid = require('../utils/patternValid');
+const { urlRegExp } = require('../utils/constants');
 
 const {
   getUsers, getUserId, updateUser, updateAvatar, getInfoUser,
@@ -21,7 +21,7 @@ routerUsers.patch('/me', celebrate({
 }), updateUser);
 routerUsers.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().pattern(patternValid).required(),
+    avatar: Joi.string().pattern(urlRegExp).required(),
   }),
 }), updateAvatar);
 
