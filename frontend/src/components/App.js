@@ -180,13 +180,13 @@ function App() {
     function handleRegister(formValue) {
         auth.signUp(formValue)
             .then(() => {
-                infoTooltipOpen(true);
+                openInfoTooltip(true);
             })
             .then(() => {
                 navigate('/sign-in');
             })
             .catch(() => {
-                infoTooltipOpen(false);
+                openInfoTooltip(false);
             })
     }
 
@@ -200,7 +200,7 @@ function App() {
                 navigate('/', {replace:true})
             })
             .catch(() => {
-                infoTooltipOpen(false);
+                openInfoTooltip(false);
             })
     }
 
