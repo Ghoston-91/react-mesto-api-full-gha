@@ -179,7 +179,7 @@ function App() {
     }
 
     function handleRegister(formValue) {
-        auth.register(formValue)
+        auth.signUp(formValue)
             .then(() => {
                 openInfoTooltip(true);
             })
@@ -192,7 +192,7 @@ function App() {
     }
 
     function handleSignIn (formValue) {
-        auth.login(formValue)
+        auth.signIn(formValue)
             .then(() => {
                 setUserEmail(formValue.email);
                 setIsLoggedIn(true);
