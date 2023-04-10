@@ -1,20 +1,10 @@
 .profile__info {
-    max-width: 336px;
-    padding-left: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-@media screen and (min-width: 320px) and (max-width: 588px) {
-    .profile__info {
-        padding-left: 0;
-        max-width: 282px;
-    }
-}
-
-@media screen and (min-width: 589px) and (max-width: 710px) {
-    .profile__info {
-        max-width: 220px;
-    }
+  display: flex;
+  position: relative;
+  justify-content: center;
+  min-width: 100px;
+  flex-direction: column;
+  flex-grow: 2;
+  padding-left: 30px;
+  margin: 0 10px 0 0;
 }

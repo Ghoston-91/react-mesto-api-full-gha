@@ -1,37 +1,18 @@
-const mongoose = require('mongoose');
-const { urlRegExp } = require('../utils/constants');
+const { Schema, model } = require("mongoose")
+const { field, link, id } = require("./types");
 
-const cardSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 30,
-  },
-  link: {
-    type: String,
-    required: true,
-    validate: {
-      validator(v) {
-        return v.match(urlRegExp);
-      },
-      message: 'Неверный формат ссылки',
-    },
-  },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'user',
-  },
-  likes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+const cardSchema = new Schema({
+  name: field,
+  link,
+  owner: id,
+  likes: {
+    type: [{ type: Schema.Types.ObjectId, ref: "user" }],
     default: [],
-  }],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-});
+})
 
-module.exports = mongoose.model('card', cardSchema);
+module.exports = model("card", cardSchema)

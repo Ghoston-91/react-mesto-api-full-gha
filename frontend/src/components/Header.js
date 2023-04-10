@@ -1,28 +1,42 @@
-import React from "react";
-import headerLogo from "../images/logo.svg";
-import { Routes, Route, Link } from "react-router-dom";
+import mestoSvg from "../images/mesto.svg";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 
-export default function Header(props) {
-    const {userEmail,onSignExit} = props;
-    return (
-        <div className="header">
-            <img
-                src={headerLogo}
-                className="header__logo"
-                alt="логотип Место"
-            />
-            <div className="header__nav"> 
-            <Routes>
-                <Route path="sign-in" element={<Link to="/sign-up" className="header__link" >Регистрация</Link> }/>
-                <Route path="sign-up" element={<Link to="/sign-in" className="header__link" >Войти</Link> }/>
-                <Route path="/" element={
-                    <>
-                    <p className="header__email">{userEmail}</p>
-                    <Link to="/sign-in" className="header__link" onClick={onSignExit}>Выйти</Link>
-                    </>
-                }/>
-            </Routes>
-            </div>
-        </div>
-    );
+const Header = ({ loggedIn, onSignOut }) => {
+    const { email } = useContext(CurrentUserContext)
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const handleLogin = () => {
+        navigate('/signin', {replace: true});
+    }
+
+    const handleRegister = () => {
+        navigate('/signup', {replace: true});
+    }
+
+    const handleLogout = () => {
+        navigate('/signin', {replace: true});
+        onSignOut()
+    }
+
+    return <header className="header">
+        <img alt="Место"
+             className="header__logo"
+             src={mestoSvg}/>
+        { loggedIn && <div className='header__container'>
+            <p className='header__email'>{email}</p>
+            <a href={'#'} className={'header__enter'} onClick={handleLogout}>Выйти</a>
+        </div>}
+            { location.pathname === '/signup'
+                && <a href="#" className="header__link" onClick={handleLogin}>Войти</a> }
+            { location.pathname === '/signin'
+                && <a href="#" className="header__link" onClick={handleRegister}>Регистрация</a> }
+
+
+    </header>
 }
+
+export default Header;

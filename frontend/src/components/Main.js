@@ -1,54 +1,64 @@
-import { useContext } from "react";
+import profilePencilSvg from "../images/pencil.svg";
+import {useContext} from "react";
 import Card from "./Card";
-import CurrentUserContext from "../context/CurrentUserContext.js";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
-export default function Main(props) {
-    const { onEditAvatar, onEditProfile, onAddPlace } = props;
-    const currentUser = useContext(CurrentUserContext);
+function Main ({ onEditProfile,
+                   onAddPlace,
+                   onEditAvatar,
+                   onCardClick,
+                   onCardLike,
+                   onCardRemove,
+                   cards = []}) {
+
+    const { name, about, avatar } = useContext(CurrentUserContext)
 
     return (
-        <div className="content">
+        <main className="content">
+
+            {/* profile */}
             <section className="profile">
-                <div onClick={onEditAvatar} className="profile__image">
-                    <img
-                        src={currentUser.avatar}
-                        className="profile__avatar"
-                        alt="фото Жак-Ив Кусто"
-                    />
+
+                <div className="profile__image-container" onClick={onEditAvatar}>
+                    <img alt="Фото пользователя"
+                         className="profile__image"
+                         src={avatar}
+                         />
+                    <div className="profile__pencil"></div>
                 </div>
                 <div className="profile__info">
-                    <div className="profile__edit">
-                        <h1 className="profile__title">{currentUser.name}</h1>
-                        <button
-                            onClick={onEditProfile}
-                            className="profile__editor"
-                            type="button"
-                            aria-label="Редактировать профиль"
-                        />
+                    <div className="profile__header-line">
+                        <h1 className="profile__title">{name}</h1>
+                        <button type="button"
+                                className="profile__edit" onClick={onEditProfile}>
+                            <img src={profilePencilSvg}
+                                 alt="Редактировать" />
+                        </button>
                     </div>
-                    <p className="profile__subtitle">{currentUser.about}</p>
+                    <p className="profile__subtitle">{about}</p>
                 </div>
-                <button
-                    onClick={onAddPlace}
-                    className="profile__add-button"
-                    type="button"
-                    aria-label="Добавить фото"
-                />
+                <button type="button"
+                        className="profile__plus"
+                        onClick={onAddPlace}>
+                </button>
+
             </section>
-            <section className="cards">
-                {props.cards.map((card) => (
-                    <Card
-                        key={card._id}
-                        link={card.link}
-                        name={card.name}
-                        likes={card.likes.length}
-                        card={card}
-                        onCardLike={props.onCardLike}
-                        onCardDelete={props.onCardDelete}
-                        onCardClick={props.onCardClick}
-                    />
-                ))}
+
+            {/* elements  */}
+
+            <section className="elements">
+                {/* отображение массива карточек */}
+                { cards.map( card =>
+                    <Card key={card._id} card={card}
+                          onCardClick={onCardClick}
+                          onCardLike={ () => onCardLike(card) }
+                          onCardRemove={() => onCardRemove(card) }
+                    /> )
+                }
             </section>
-        </div>
+
+        </main>
     );
 }
+
+export default Main;

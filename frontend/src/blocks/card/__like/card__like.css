@@ -1,17 +1,16 @@
 .card__like {
-    background-image: url(../../../images/Vector_like.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    min-width: 22px;
-    min-height: 19px;
-    border: none;
-    background-color: transparent;
-    padding: 0;
-    margin-bottom: 3px;
+  cursor: pointer;
+  width: 22px;
+  height: 19px;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  background-image: url("../../../images/heart.svg");
+  flex-shrink: 0;
 }
+
 
 .card__like:hover {
-    opacity: 0.5;
-    cursor: pointer;
+  opacity: 0.6;
+  transition: opacity ease-in 0.5s;
 }
-

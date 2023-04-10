@@ -1,38 +1,35 @@
 import PopupWithForm from "./PopupWithForm";
-import { useRef, useEffect } from "react";
+import {useContext, useRef} from "react";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
-export default function EditAvatarPopup(props) {
-    const avatarRef = useRef();
-    useEffect(() => {
-        avatarRef.current.value = "";
-    }, [props.isOpen]);
+export const EditAvatarPopup = ({ isOpen, closeAllPopups, onUpdate } ) => {
+    const { avatar } = useContext(CurrentUserContext)
+    const inputRef = useRef(null)
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        props.onUpdateAvatar({
-            avatar: avatarRef.current.value,
-        });
+    const onSubmit = () => {
+        if(inputRef.current) {
+            onUpdate(inputRef.current.value)
+        }
     }
 
-    return (
-        <PopupWithForm
-            isOpen={props.isOpen}
-            name="avatar"
-            title="Обновить аватар"
-            buttonText="Сохранить"
-            onClose={props.onClose}
-            onSubmit={handleSubmit}
-        >
-            <input
-                id="url-avatar"
-                type="url"
-                className="popup__input popup__input_type_avatar"
-                name="avatar"
-                required=""
-                placeholder="Сменить фото"
-                ref={avatarRef}
-            />
-            <span className="popup__error url-avatar-error" />
-        </PopupWithForm>
-    );
+
+    return <PopupWithForm submitButtonTitle={'Сохранить'}
+      name={'card-form'}
+      idForm={'avatar-form'}
+      className={'popup_type_agreement'}
+      title={'Обновить аватар'}
+      isOpen={isOpen}
+      onClose={closeAllPopups}
+      onSubmit={onSubmit}
+    >
+        <input id="agreement"
+               ref={inputRef}
+               placeholder="Ссылка на изображение"
+               name="url"
+               type="url"
+               defaultValue={avatar}
+               className="popup__input" required minLength="2" />
+        <span className="popup__error input-error-url"></span>
+    </PopupWithForm>
+
 }

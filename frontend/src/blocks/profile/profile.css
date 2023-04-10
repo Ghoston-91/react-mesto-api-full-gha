@@ -1,24 +1,15 @@
-
 .profile {
-    position: relative;
-    max-width: 880px;
-    display: flex;
-    margin: 0px auto;
-    padding: 40px 0px 51px;
+  margin: 0 auto;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-@media screen and (min-width: 320px) and (max-width: 588px) {
-    .profile {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 42px 0px 36px;
-    }
-}
-
-@media screen and (min-width: 581px) and (max-width: 1024px) {
-    .profile {
-        padding-left: 27px;
-        padding-right: 27px;
-    }
+@media screen and (max-width: 600px) {
+  .profile  {
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 19px 0;
+  }
 }

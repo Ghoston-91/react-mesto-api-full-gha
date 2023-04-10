@@ -1,49 +1,38 @@
 import React from "react";
-import UnionSuccess from "../images/UnionSuccess.png";
-import UnionFailed from "../images/UnionFailed.png";
+import error from '../images/error.svg'
+import confirmation from '../images/confirmation.svg'
 
-// export default function InfoTooltip(props) {
-//     const { name, isOpen, onClose, status } = props;
-//     const image = status === "accept" ? UnionSuccess : UnionFailed;
 
-//     return (
-//         <div
-//             className={`popup popup_type_${name} ${
-//                 isOpen ? "popup_active" : ""
-//             }`}
-//         >
-//             <div className="popup__container">
-//                 <button
-//                     type="button"
-//                     className="popup__close"
-//                     onClick={onClose}
-//                 />
-//                 <form className="popup__form" name={name} id={name}>
-//                     <img
-//                         className="popup__info-image"
-//                         src={image}
-//                         alt={status}
-//                     />
-//                     <p className="popup__info-text">{status === 'accept' ? 'Вы успешно зарегистрировались!'
-//                 : 'Что-то пошло не так! Попробуйте ещё раз.'}</p>
-//                 </form>
-//             </div>
-//         </div>
-//     );
-// }
+const InfoTooltip = (props) => {
+    const {status, isOpen, closeAllPopups} = props;
+    const text = status === 'confirmation'
+        ? 'Вы успешно зарегистрировались!'
+        : 'Что-то пошло не так! Попробуйте ещё раз.';
+    const icon = status === 'confirmation'
+        ? confirmation
+        : error;
 
-function InfoTooltip(props) {
     return (
-        <div className={`popup popup_type_info-tooltip ${props.isOpen ? 'popup_opened' : ''}`}>
-            <div className="popup__container popup__content">
-                <button type="button" aria-label="Закрыть попап" className="popup__close-btn close-btn" onClick={props.onClose}/>
-                <div className="popup__info-container">
-                    <img src={props.isSuccess ? UnionSuccess : UnionFailed} alt={props.isSuccess ? "Галочка" : "Крестик"} className="popup__icon"/>
-                    <h2 className="popup__text">{props.text}</h2>   
+        <div className={`popup popup_type_infotool ${isOpen ? 'popup_opened' : ''}`}>
+
+            <div className="popup__container">
+                <div className="popup__infobox">
+                    <button type="button"
+                            className="popup__close popup__close_infotool"
+                            onClick={closeAllPopups}
+                    ></button>
+                    <img src={icon}
+                         alt={status}
+                         className="popup__infotool_icon"/>
+                    <p className="popup__infotool_text">{text}</p>
                 </div>
+
             </div>
+
         </div>
+
     )
+
 }
 
-export default InfoTooltip;
+export default InfoTooltip
