@@ -15,13 +15,13 @@ export default function EditProfilePopup(props) {
     }
 
     useEffect(() => {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
+        setName(currentUser ? currentUser.name:'');
+        setDescription(currentUser ? currentUser.about: '');
     }, [currentUser, props.isOpen]);
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.onUpdateUser({ name: name, about: description });
+        props.onUpdateUser({ name, about: description });
     }
 
     return (
