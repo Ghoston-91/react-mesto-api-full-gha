@@ -1,53 +1,43 @@
 const BASE_URL = "https://api.ghoston91.nomoredomains.monster";
 
-const checkResponse = (res) => {
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+const getResponse = (res) => {
+  if (res.ok) {
+      return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-export const signUp = (formValue) => {
-    return fetch(`${BASE_URL}/signup`, {
-        method: 'POST',
-        headers: {
+export const signUp = async (data) => {
+  const res = await fetch(`${BASE_URL}/signup`, {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          password: formValue.password,
-          email: formValue.email
-        })
-    })
-    .then(checkResponse)
+      },
+      body: JSON.stringify(data)
+  });
+  return getResponse(res);
+}
+
+export const signIn = async (data) => {
+  const res = await fetch(`${BASE_URL}/signin`, {
+      method: "POST",
+      headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  });
+  return getResponse(res);
 };
 
-export const signIn = (formValue) => {
-    return fetch(`${BASE_URL}/signin`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          password: formValue.password,
-          email: formValue.email
-        })
-        }
-    )
-    .then(checkResponse)
-    .then((data) => {
-      localStorage.setItem('token', data.token);
-      return data;
-    })
-  };
-
-export const checkAuthData = (jwt) => {
-    return fetch(`${BASE_URL}/users/me`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization' : `Bearer ${jwt}`
-        }
-        }
-    )
-    .then(checkResponse)
-  };
+export const checkAuthData = async(token) => {
+  const res = await fetch(`${BASE_URL}/users/me`, {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+      }
+  });
+  return getResponse(res)
+}
