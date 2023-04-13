@@ -31,13 +31,14 @@ module.exports.createCard = (req, res, next) => {
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   const userId = req.user._id;
-  console.dir(req.user);
+  console.log(req.user);
   Card.findById(cardId)
     .orFail(() => {
       throw new ErrorNotFound('Пользователь не найден');
     })
     // eslint-disable-next-line consistent-return
     .then((card) => {
+      console.log(`userId = ${userId}, ownerId = ${card.owner.id}`);
       const ownerId = card.owner.id;
       if (ownerId !== userId) {
         next(new ForbiddenErr('У вас нет доступа к удалению этой карточки'));
