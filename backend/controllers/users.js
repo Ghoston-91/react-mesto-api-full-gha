@@ -47,6 +47,7 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then(() => res.status(STATUS_CREATED).send({ message: 'Пользователь создан' }))
     .catch((error) => {
+      console.dir(error);
       if (error.code === 11000) {
         next(new ConflictUserErr('Аккаунт с данным email зарегистрирован'));
       } else if (error.name === 'ValidationError') {
