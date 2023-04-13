@@ -10,7 +10,7 @@ const {
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .then((cards) => res.send(cards))
     .catch((error) => next(error));
 };
@@ -30,18 +30,13 @@ module.exports.createCard = (req, res, next) => {
 
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  const userId = req.user._id;
-  console.log(req.user);
   Card.findById(cardId)
     .orFail(() => {
       throw new ErrorNotFound('Пользователь не найден');
     })
     // eslint-disable-next-line consistent-return
     .then((card) => {
-      console.dir(card);
-      console.log(`userId = ${userId}, ownerId = ${card.owner.toString()}`);
-      const ownerId = card.owner.toString();
-      if (ownerId !== userId) {
+      if (card.owner.toString() !== req.user._id) {
         next(new ForbiddenErr('У вас нет доступа к удалению этой карточки'));
       } else {
         return Card.findByIdAndDelete(cardId) // без исключения на 38 строке return не применяется
@@ -65,7 +60,7 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .orFail(() => {
       throw new ErrorNotFound('Пользователь не найден');
     })
@@ -85,7 +80,7 @@ module.exports.dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .orFail(() => {
       throw new ErrorNotFound('Пользователь не найден');
     })
