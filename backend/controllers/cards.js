@@ -38,7 +38,7 @@ module.exports.deleteCard = (req, res, next) => {
     })
     // eslint-disable-next-line consistent-return
     .then((card) => {
-      console.log(`userId = ${userId}, ownerId = ${card.owner.id}`);
+      console.log(`userId = ${userId}, ownerId = ${String(card.owner.id)}`);
       const ownerId = card.owner.id;
       if (ownerId !== userId) {
         next(new ForbiddenErr('У вас нет доступа к удалению этой карточки'));
