@@ -1,9 +1,10 @@
 import React from "react";
 import headerLogo from "../images/logo.svg";
 import { Routes, Route, Link } from "react-router-dom";
+import CurrentUserContext from "../context/CurrentUserContext";
 
-export default function Header(props) {
-    const {userEmail,onSignExit} = props;
+export default function Header({ onSignExit }) {
+    const { email = "" } = React.useContext(CurrentUserContext);
     return (
         <div className="header">
             <img
@@ -17,7 +18,7 @@ export default function Header(props) {
                 <Route path="sign-up" element={<Link to="/sign-in" className="header__link" >Войти</Link> }/>
                 <Route path="/" element={
                     <>
-                    <p className="header__email">{userEmail}</p>
+                    <p className="header__email">{email}</p>
                     <Link to="/sign-in" className="header__link" onClick={onSignExit}>Выйти</Link>
                     </>
                 }/>

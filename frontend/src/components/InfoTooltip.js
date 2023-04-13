@@ -1,10 +1,9 @@
 import React from "react";
-import UnionSuccess from "../images/UnionSuccess.png";
-import UnionFailed from "../images/UnionFailed.png";
+import { ReactComponent as SuccessIcon } from "../images/OkIcon.svg";
+import { ReactComponent as FailIcon } from "../images/Fail-Icon.svg";
 
-export default function InfoTooltip(props) {
-    const { name, isOpen, onClose, status } = props;
-    const image = status === "accept" ? UnionSuccess : UnionFailed;
+export default function InfoTooltip({ name, isOpen, onClose, text, isError }) {
+    // const image = isError ? UnionSuccess : UnionFailed;
 
     return (
         <div
@@ -19,13 +18,13 @@ export default function InfoTooltip(props) {
                     onClick={onClose}
                 />
                 <form className="popup__form" name={name} id={name}>
-                    <img
+                    {isError ? (<FailIcon className="popup__info-image"/>) : (<SuccessIcon className="popup__info-image"/>)}
+                    {/* <img
                         className="popup__info-image"
-                        src={image}
-                        alt={status}
-                    />
-                    <p className="popup__info-text">{status === 'accept' ? 'Вы успешно зарегистрировались!'
-                : 'Что-то пошло не так! Попробуйте ещё раз.'}</p>
+                        src={}
+                        alt={isError ? "Ошибка" : "Успешно" }
+                    /> */}
+                    <p className="popup__info-text">{text}</p> {/* className={`popup__info-text ${isError ? "popup__info-text_errored" : ""}`} */}
                 </form>
             </div>
         </div>
