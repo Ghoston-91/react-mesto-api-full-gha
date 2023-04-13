@@ -47,7 +47,6 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then(() => res.status(STATUS_CREATED).send({ message: 'Пользователь создан' }))
     .catch((error) => {
-      console.dir(error);
       if (error.code === 11000) {
         next(new ConflictUserErr('Аккаунт с данным email зарегистрирован'));
       } else if (error.name === 'ValidationError') {
@@ -94,7 +93,6 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log(JWT_SECRET);
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
       res.send({ token });
     })

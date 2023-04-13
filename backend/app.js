@@ -12,11 +12,9 @@ const { PORT = 3000 } = process.env;
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
   .then(() => {
-    console.log('Connected');
+    console.log('Connected to Mongo');
   })
-  .catch((err) => {
-    console.error(err);
-  });
+  .catch(console.dir);
 
 app.use(cors());
 
@@ -36,5 +34,5 @@ app.use(errors());
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
-  console.log(`Listing on port ${PORT}`);
+  console.log(`Listening on port ${PORT}`);
 });

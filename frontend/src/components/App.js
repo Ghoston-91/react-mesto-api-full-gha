@@ -13,7 +13,6 @@ import { AddPlacePopup } from "./AddPlacePopup ";
 import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
-// import {checkAuthData, signIn, signUp} from "../utils/authorization";
 import InfoTooltip from "./InfoTooltip";
 import { defaultTooltipState } from "../utils/constants";
 import { makeErrorText } from "../utils/makeerrortext";
@@ -98,7 +97,7 @@ function App() {
     }
 
     function handleCardLike(card) {
-        const isLiked = card.likes.some((user) => user._id === currentUser._id);
+        const isLiked = card.likes.some((user) => user === currentUser._id);
         // Отправляем запрос в API и получаем обновлённые данные карточки
         apiConnect
             .changeLikeCardStatus(card._id, isLiked)
