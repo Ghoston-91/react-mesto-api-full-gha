@@ -2,8 +2,7 @@ import { useContext } from "react";
 import Card from "./Card";
 import CurrentUserContext from "../context/CurrentUserContext.js";
 
-export default function Main(props) {
-    const { onEditAvatar, onEditProfile, onAddPlace } = props;
+export default function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardLike, onCardDelete, onCardClick }) {
     const currentUser = useContext(CurrentUserContext);
 
     return (
@@ -36,13 +35,13 @@ export default function Main(props) {
                 />
             </section>
             <section className="cards">
-                {props.cards.map((card) => (
+                {cards.map((card) => (
                     <Card
                         key={card._id}
                         card={card}
-                        onCardLike={props.onCardLike}
-                        onCardDelete={props.onCardDelete}
-                        onCardClick={props.onCardClick}
+                        onCardLike={onCardLike}
+                        onCardDelete={onCardDelete}
+                        onCardClick={onCardClick}
                     />
                 ))}
             </section>
