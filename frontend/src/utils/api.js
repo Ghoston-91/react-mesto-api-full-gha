@@ -116,6 +116,7 @@ class Api {
 const apiConnect = new Api({
     baseUrl: "https://api.ghoston91.nomoredomains.monster",
     headers: {
+        'Accept': 'application/json',
         "Content-Type": "application/json",
     },
 });
