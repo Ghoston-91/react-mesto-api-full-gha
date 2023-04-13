@@ -8,7 +8,7 @@
 
 ## Ссылки на проект
 
-IP 84.201.167.187
+IP 158.160.2.67
 
 Frontend https://ghoston91.nomoredomains.monster
 
